@@ -1,14 +1,14 @@
 name: CI/CD
 on: [push]
 env:
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_DEV }}
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID_DEV }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DEV }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_EQUIPAJES }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID_EQUIPAJES }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_EQUIPAJES }}
 
 jobs:
   Build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/gestion-equipajes'
+    if: github.ref == 'refs/heads/feat/equipajes-diseño'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
@@ -22,7 +22,7 @@ jobs:
   Deploy:
     needs: Build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/gestion-equipajes'
+    if: github.ref == 'refs/heads/feat/equipajes-diseño'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
