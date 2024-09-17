@@ -8,7 +8,7 @@ env:
 jobs:
   Build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/gestion-equipajes'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
@@ -22,7 +22,7 @@ jobs:
   Deploy:
     needs: Build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/gestion-equipajes'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
@@ -32,6 +32,6 @@ jobs:
       - name: Install Vercel Cli
         run: yarn global add vercel@latest
       - name: Pull Vercel Enviromental Variables
-        run: vercel pull --yes --token=${{secrets.VERCEL_TOKEN_DEV}}
+        run: vercel pull --yes --token=${{secrets.VERCEL_TOKEN_EQUIPAJES}}
       - name: Trigger Vercel Deployment
-        run: vercel deploy --no-wait --token=${{ secrets.VERCEL_TOKEN_DEV}}
+        run: vercel deploy --no-wait --token=${{ secrets.VERCEL_TOKEN_EQUIPAJES}}
