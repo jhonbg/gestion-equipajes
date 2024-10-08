@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -6,18 +7,48 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Minus, Plus } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 import Image, { StaticImageData } from "next/image";
 
 interface Props {
     title: string;
     description?: string;
-    price: string;
+    price: number;
     icon: StaticImageData;
+    maxAmount?: number;
+    onChange: (value: number) => void;
 }
 
-function Index({ title, description, price, icon }: Props) {
+function Index({
+    title,
+    description,
+    price,
+    icon,
+    maxAmount,
+    onChange,
+}: Props) {
+    const [count, setCount] = useState(0);
+
+    const handleIncrement = () => {
+        if (maxAmount) {
+            if (count < maxAmount) {
+                setCount(count + 1);
+                onChange(count + 1);
+            }
+        } else {
+            setCount(count + 1);
+            onChange(count + 1);
+        }
+    };
+
+    const handleDecrement = () => {
+        if (count > 0) {
+            setCount(count - 1);
+            onChange(count + 1);
+        }
+    };
+
     return (
         <Card className="py-0 my-3">
             <CardHeader className="flex flex-row justify-between">
@@ -36,22 +67,31 @@ function Index({ title, description, price, icon }: Props) {
                         </CardDescription>
                     </div>
                 </div>
-                <div className="flex gap-1 items-center ">
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                    >
-                        <Minus className="h-2 w-2" />
-                    </Button>
-                    <span>1</span>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full"
-                    >
-                        <Plus className="h-2 w-2" />
-                    </Button>
+                <div className="flex flex-col gap-1 items-end ">
+                    <div className="flex gap-2 items-center">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full"
+                            onClick={handleDecrement}
+                        >
+                            <Minus className="h-2 w-2" />
+                        </Button>
+                        <span>{count}</span>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full"
+                            onClick={handleIncrement}
+                        >
+                            <Plus className="h-2 w-2" />
+                        </Button>
+                    </div>
+                    {maxAmount && (
+                        <div className="text-xs text-[#0F172A]">
+                            Max {maxAmount}
+                        </div>
+                    )}
                 </div>
             </CardHeader>
         </Card>

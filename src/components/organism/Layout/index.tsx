@@ -5,7 +5,7 @@ interface Props {
 }
 function Index({children}: Props) {
   return (
-    <div className='flex justify-center'>
+    <div className='flex flex-col items-center bg-[#F1F5F9] w-full'>
         {children}
     </div>
   )

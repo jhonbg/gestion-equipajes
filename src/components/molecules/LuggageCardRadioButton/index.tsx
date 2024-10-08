@@ -1,6 +1,6 @@
+"use client";
 import React from "react";
 import Image from "next/image";
-import { Label } from "@/components/ui/label";
 import {
     Card,
     CardContent,
@@ -8,18 +8,33 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import BolsoIcon from "../../../../public/reservas-icons/bolso.png";
 import MaletasIcon from "../../../../public/reservas-icons/maletas.png";
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Props {
     title: string;
     description: string;
     radioLabel: string;
-    price?: string;
+    price?: number;
+    onChange: (value: boolean) => void; // Ajustado para aceptar booleano
+    checked: boolean;
 }
 
-function Index({ title, description, radioLabel, price }: Props) {
+function LuggageCardRadioButton({
+    title,
+    description,
+    radioLabel,
+    price,
+    onChange,
+    checked,
+}: Props) {
+
+    const handleCheckboxChange = (checked: boolean) => {
+        onChange(checked);
+    };
+
     return (
         <Card className="py-0 my-3">
             <CardHeader className="flex gap-3 flex-row">
@@ -28,7 +43,7 @@ function Index({ title, description, radioLabel, price }: Props) {
                     alt="bolso"
                     width={46}
                     height={46}
-                ></Image>
+                />
                 <div>
                     <CardTitle className="font-bold">{title}</CardTitle>
                     <CardDescription>{description}</CardDescription>
@@ -36,18 +51,33 @@ function Index({ title, description, radioLabel, price }: Props) {
             </CardHeader>
             <hr />
             <CardContent className="mt-3">
-                <RadioGroup>
-                    <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Label htmlFor="option-one">
-                            {radioLabel}
-                            {price && <span>{price}</span>}
-                        </Label>
-                    </div>
-                </RadioGroup>
+                {/* En lugar de RadioGroup, directamente el input */}
+                <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                        <Checkbox
+                            id={radioLabel}
+                            value={radioLabel}
+                            checked={checked}
+                            onCheckedChange={handleCheckboxChange}
+                        />
+                        {/* <input
+                            type="radio"  
+                            value={radioLabel}
+                            checked={checked} 
+                            onChange={(e) => onChange(e.target.checked)}  
+                            id={radioLabel}
+                            className="radio-button"
+                        /> */}
+                    </FormControl>
+
+                    <FormLabel htmlFor={radioLabel}>
+                        {radioLabel}
+                        {price && <span> {price}</span>}
+                    </FormLabel>
+                </FormItem>
             </CardContent>
         </Card>
     );
 }
 
-export default Index;
+export default LuggageCardRadioButton;
