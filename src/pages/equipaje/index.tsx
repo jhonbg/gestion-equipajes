@@ -25,7 +25,7 @@ import SportIcon from "../../../public/reservas-icons/deporte.png";
 import MascotIcon from "../../../public/reservas-icons/mascota.png";
 import LigthsIcon from "../../../public/reservas-icons/luces.png";
 import Navbar from "@/components/organism/Navbar/index";
-import Footer from "@/components/organism/Footer/index"
+import Footer from "@/components/organism/Footer/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -121,222 +121,230 @@ function Equipajes() {
     }, [form.getValues(), calculateTotalPrice]);
 
     return (
-        <Layout>
-            <div className="w-3/4 flex justify-start">
-                <h1 className="text-3xl text-[#1A4F6E] font-semibold my-3 text-left">
-                    Personaliza tu viaje
-                </h1>
-            </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <Card>
-                        <LuggageCardTitle />
-                        <CardContent>
-                            <Card>
-                                <CardHeader className="bg-[#F1F5F9] py-1 px-2 rounded-lg">
-                                    <CardTitle className="flex gap-3">
-                                        <LuggageTravelInfo
-                                            title="Ida"
-                                            active={true}
-                                        />
-                                        <LuggageTravelInfo
-                                            title="Vuelta"
-                                            active={false}
-                                        />
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="py-5">
-                                    <LuggageSectionTitle
-                                        text1="Selecciona qué"
-                                        text2="llevarás en cabina"
-                                    />
-
-                                    <LuggageSectionLayout>
-                                        <FormField
-                                            control={form.control}
-                                            name="cabinLuggage1"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardRadioButton
-                                                        title="1 Bolso o mochila pequeña"
-                                                        description="Bajo el asiento delantero"
-                                                        radioLabel="Bolsa o mochila pequeña incluida"
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                        checked={field.value}
-                                                    />
-                                                </FormItem>
-                                            )}
+        <>
+            <Navbar />
+            <Layout>
+                <div className="w-3/4 flex justify-start">
+                    <h1 className="text-3xl text-[#1A4F6E] font-semibold my-3 text-left">
+                        Personaliza tu viaje
+                    </h1>
+                </div>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <Card>
+                            <LuggageCardTitle />
+                            <CardContent>
+                                <Card>
+                                    <CardHeader className="bg-[#F1F5F9] py-1 px-2 rounded-lg">
+                                        <CardTitle className="flex gap-3">
+                                            <LuggageTravelInfo
+                                                title="Ida"
+                                                active={true}
+                                            />
+                                            <LuggageTravelInfo
+                                                title="Vuelta"
+                                                active={false}
+                                            />
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="py-5">
+                                        <LuggageSectionTitle
+                                            text1="Selecciona qué"
+                                            text2="llevarás en cabina"
                                         />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="cabinLuggage2"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardRadioButton
-                                                        title="1 Bolso o mochila
+                                        <LuggageSectionLayout>
+                                            <FormField
+                                                control={form.control}
+                                                name="cabinLuggage1"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardRadioButton
+                                                            title="1 Bolso o mochila pequeña"
+                                                            description="Bajo el asiento delantero"
+                                                            radioLabel="Bolsa o mochila pequeña incluida"
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                            checked={
+                                                                field.value
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="cabinLuggage2"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardRadioButton
+                                                            title="1 Bolso o mochila
                                                         pequeña"
-                                                        description="+ 1 equipaje de mano"
-                                                        radioLabel="Ambos por COP 
+                                                            description="+ 1 equipaje de mano"
+                                                            radioLabel="Ambos por COP 
                                                             "
-                                                        price={53900}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                        checked={field.value}
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </LuggageSectionLayout>
+                                                            price={53900}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                            checked={
+                                                                field.value
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </LuggageSectionLayout>
 
                                         <LuggageSectionTitle
                                             text1="¿Agregas"
                                             text2="equipaje de bodega?"
                                         />
 
-                                    <LuggageSectionLayout>
-                                        <FormField
-                                            control={form.control}
-                                            name="storeLuggage1"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="15kg"
-                                                        price={49900}
-                                                        icon={MaletaIcon}
-                                                        maxAmount={3}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
+                                        <LuggageSectionLayout>
+                                            <FormField
+                                                control={form.control}
+                                                name="storeLuggage1"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="15kg"
+                                                            price={49900}
+                                                            icon={MaletaIcon}
+                                                            maxAmount={3}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="storeLuggage2"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="23kg"
-                                                        description="Agrega esto por"
-                                                        price={49900}
-                                                        icon={MaletaIcon}
-                                                        maxAmount={3}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </LuggageSectionLayout>
+                                            <FormField
+                                                control={form.control}
+                                                name="storeLuggage2"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="23kg"
+                                                            description="Agrega esto por"
+                                                            price={49900}
+                                                            icon={MaletaIcon}
+                                                            maxAmount={3}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </LuggageSectionLayout>
 
-                                    <LuggageCardAccordion>
-                                        <FormField
-                                            control={form.control}
-                                            name="specialLuggage1"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="Instrumento musical 15kg"
-                                                        price={49900}
-                                                        icon={GuitarIcon}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
+                                        <LuggageCardAccordion>
+                                            <FormField
+                                                control={form.control}
+                                                name="specialLuggage1"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="Instrumento musical 15kg"
+                                                            price={49900}
+                                                            icon={GuitarIcon}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="specialLuggage2"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="Equipo deportivo 15kg"
-                                                        price={49900}
-                                                        icon={SportIcon}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
+                                            <FormField
+                                                control={form.control}
+                                                name="specialLuggage2"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="Equipo deportivo 15kg"
+                                                            price={49900}
+                                                            icon={SportIcon}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="specialLuggage3"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="Equipos adiovisuales 15kg"
-                                                        price={49900}
-                                                        icon={LigthsIcon}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
+                                            <FormField
+                                                control={form.control}
+                                                name="specialLuggage3"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="Equipos adiovisuales 15kg"
+                                                            price={49900}
+                                                            icon={LigthsIcon}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="specialLuggage4"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <LuggageCardAdd
-                                                        title="Guacal con mascota 15kg"
-                                                        price={49900}
-                                                        icon={MascotIcon}
-                                                        onChange={
-                                                            field.onChange
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </LuggageCardAccordion>
-                                </CardContent>
-                                <CardFooter className="bg-[#F1F5F9] flex justify-between pt-5 rounded-lg">
-                                    <span className="font-bold">
-                                        Total equipaje
-                                    </span>
-                                    <span className="font-bold">
-                                        COP {totalPrice}
-                                    </span>
-                                </CardFooter>
-                            </Card>
-                        </CardContent>
-                        <CardFooter className="flex justify-center">
-                            {passengers > 1 ? (
-                                <Button
-                                    type="submit"
-                                    className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                >
-                                    Agregar y Continuar
-                                </Button>
-                            ) : (
-                                <Button
-                                    type="submit"
-                                    className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                >
-                                    Enviar
-                                </Button>
-                            )}
-                        </CardFooter>
-                    </Card>
-                </form>
-            </Form>
-        </Layout>
+                                            <FormField
+                                                control={form.control}
+                                                name="specialLuggage4"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <LuggageCardAdd
+                                                            title="Guacal con mascota 15kg"
+                                                            price={49900}
+                                                            icon={MascotIcon}
+                                                            onChange={
+                                                                field.onChange
+                                                            }
+                                                        />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </LuggageCardAccordion>
+                                    </CardContent>
+                                    <CardFooter className="bg-[#F1F5F9] flex justify-between pt-5 rounded-lg">
+                                        <span className="font-bold">
+                                            Total equipaje
+                                        </span>
+                                        <span className="font-bold">
+                                            COP {totalPrice}
+                                        </span>
+                                    </CardFooter>
+                                </Card>
+                            </CardContent>
+                            <CardFooter className="flex justify-center">
+                                {passengers > 1 ? (
+                                    <Button
+                                        type="submit"
+                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
+                                    >
+                                        Agregar y Continuar
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        type="submit"
+                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
+                                    >
+                                        Enviar
+                                    </Button>
+                                )}
+                            </CardFooter>
+                        </Card>
+                    </form>
+                </Form>
+            </Layout>
+            <Footer />
+        </>
     );
 }
 
