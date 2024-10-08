@@ -24,6 +24,8 @@ import GuitarIcon from "../../../public/reservas-icons/guitarra.png";
 import SportIcon from "../../../public/reservas-icons/deporte.png";
 import MascotIcon from "../../../public/reservas-icons/mascota.png";
 import LigthsIcon from "../../../public/reservas-icons/luces.png";
+import Navbar from "@/components/organism/Navbar/index";
+import Footer from "@/components/organism/Footer/index"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -190,10 +192,10 @@ function Equipajes() {
                                         />
                                     </LuggageSectionLayout>
 
-                                    <LuggageSectionTitle
-                                        text1="¿Agregas"
-                                        text2="equipaje de bodega?"
-                                    />
+                                        <LuggageSectionTitle
+                                            text1="¿Agregas"
+                                            text2="equipaje de bodega?"
+                                        />
 
                                     <LuggageSectionLayout>
                                         <FormField
