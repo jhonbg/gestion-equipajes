@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import React from "react";
 
 interface Props {
-    passengers: string;
+    passengers: number;
 }
 function Index({ passengers }: Props) {
     return (
