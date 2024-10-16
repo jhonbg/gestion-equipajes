@@ -1,0 +1,37 @@
+name: CI/CD
+on: [push]
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_EQUIPAJES }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID_EQUIPAJES }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_EQUIPAJES }}
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/gestion-equipajes'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.x
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/gestion-equipajes'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.x
+      - name: Install Vercel Cli
+        run: yarn global add vercel@latest
+      - name: Pull Vercel Enviromental Variables
+        run: vercel pull --yes --token=${{secrets.VERCEL_TOKEN_EQUIPAJES}}
+      - name: Trigger Vercel Deployment
+        run: vercel deploy --no-wait --token=${{ secrets.VERCEL_TOKEN_EQUIPAJES}}

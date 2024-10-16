@@ -1,0 +1,18 @@
+{
+    "reservation": {
+        "passengers": [
+            {
+                "name": "John Doe",
+                "document": "123456789"
+            },
+            {
+                "name": "Jane Smith",
+                "document": "987654321"
+            },
+            {
+                "name": "Alice Johnson",
+                "document": "456789123"
+            }
+        ]
+    }
+}
