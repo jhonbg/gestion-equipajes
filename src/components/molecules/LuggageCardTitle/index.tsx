@@ -5,12 +5,15 @@ import EquipajeIcon from "../../../../public/reservas-icons/equipaje.png";
 import LuggageCardTitle from "@/components/atoms/LuggageCardTitle";
 import LuggagePassengerInfo from "@/components/atoms/LuggagePassengerInfo";
 
-function Index() {
+interface Props {
+    passengers: number;
+}
+function Index({passengers}: Props) {
     return (
         <CardHeader>
             <CardTitle className="flex justify-between text-xl font-semibold">
                 <LuggageCardTitle imageSrc={EquipajeIcon} title="Equipaje" />
-                <LuggagePassengerInfo passengers="2" />
+                <LuggagePassengerInfo passengers={passengers} />
             </CardTitle>
             <CardDescription className="text-xl">
                 Compra tu equipaje

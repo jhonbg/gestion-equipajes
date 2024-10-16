@@ -32,6 +32,7 @@ import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import axios from "axios";
+import numeral from "numeral";
 
 const FormSchema = z.object({
     cabinLuggage1: z.boolean(),
@@ -46,7 +47,7 @@ const FormSchema = z.object({
 
 function Equipajes() {
     const [passengers, setPassengers] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState("0.00");
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -82,7 +83,8 @@ function Equipajes() {
             specialLuggage3 * 49900 +
             specialLuggage4 * 49900;
 
-        return calculatedTotal;
+        const formattedPrice = numeral(calculatedTotal).format("0`000,0.00");
+        return formattedPrice;
     }, [form.getValues()]);
 
     function onSubmit(data: any) {
@@ -117,6 +119,7 @@ function Equipajes() {
 
     useEffect(() => {
         const newTotal = calculateTotalPrice();
+
         setTotalPrice(newTotal);
     }, [form.getValues(), calculateTotalPrice]);
 
@@ -132,7 +135,7 @@ function Equipajes() {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <Card>
-                            <LuggageCardTitle />
+                            <LuggageCardTitle passengers={passengers} />
                             <CardContent>
                                 <Card>
                                     <CardHeader className="bg-[#F1F5F9] py-1 px-2 rounded-lg">
@@ -141,10 +144,10 @@ function Equipajes() {
                                                 title="Ida"
                                                 active={true}
                                             />
-                                            <LuggageTravelInfo
+                                            {/* <LuggageTravelInfo
                                                 title="Vuelta"
                                                 active={false}
-                                            />
+                                            /> */}
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="py-5">

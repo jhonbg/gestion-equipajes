@@ -11,6 +11,8 @@ import React, { useState } from "react";
 
 import Image, { StaticImageData } from "next/image";
 
+import numeral from "numeral";
+
 interface Props {
     title: string;
     description?: string;
@@ -45,9 +47,12 @@ function Index({
     const handleDecrement = () => {
         if (count > 0) {
             setCount(count - 1);
-            onChange(count + 1);
+            onChange(count - 1);
         }
     };
+
+    const formattedPrice = numeral(price).format('0`000,0.00');
+
 
     return (
         <Card className="py-0 my-3">
@@ -63,7 +68,7 @@ function Index({
                         <CardTitle>{title}</CardTitle>
                         <CardDescription className=" text-black">
                             {description}{" "}
-                            <span className="font-bold">COP {price}</span>
+                            <span className="font-bold">COP {formattedPrice}</span>
                         </CardDescription>
                     </div>
                 </div>
