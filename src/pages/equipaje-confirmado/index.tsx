@@ -12,7 +12,7 @@ import { usePrice } from "@/components/atoms/PriceContext";
 
 
 function Equipajes() {
-    const { totalPrice, setTotalPrice } = usePrice();
+    const { totalPrice } = usePrice();
 
     const formatPrice = (price: number) => {
         return price.toLocaleString("es-CO", {
