@@ -124,7 +124,7 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
   useEffect(() => {
     setCantidad(numeros);
     luggageRendering();
-    console.log(cantidad);
+    console.log(cantidad, page);
   }, [[equipaje, numeros]])
 
   return (
