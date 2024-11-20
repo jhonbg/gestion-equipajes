@@ -5,6 +5,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import { StaticImageData } from 'next/image';
 import Bolso from "../../../../public/reservas-icons/bolso.png"
 import Maletas from "../../../../public/reservas-icons/maletas.png"
 import Maleta from "../../../../public/reservas-icons/maleta.png"
@@ -21,7 +22,7 @@ interface Props {
 
 const Index: React.FC<Props> = ({equipaje, numeros}) => {
   const [page, setPage] = useState("");
-  const [icon, setIcon] = useState<any>(null);
+  const [icon, setIcon] = useState<StaticImageData | null>(null);
   const [title, setTitle] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState<number | null>(null);
@@ -29,7 +30,7 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
 
   const luggageRendering = () => {
     setPage(equipaje)
-    switch (page){
+    switch (equipaje){
       case "Bolso de mano":
         setIcon(Bolso);
         setTitle("Bolso o mochila pequeña");
@@ -123,7 +124,8 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
   useEffect(() => {
     setCantidad(numeros);
     luggageRendering();
-  }, [page])
+    console.log(cantidad);
+  }, [[equipaje, numeros]])
 
   return (
     <Card className='border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none'>
@@ -131,11 +133,11 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
         <div className='flex items-center justify-center flex-1'>
           {icon && (
             <Image
-              src={icon}
-              alt="usuario"
-              width={44}
-              height={44}
-            ></Image>
+            src={icon}
+            alt="usuario"
+            width={44}
+            height={44}
+          ></Image>
           )}
           <div className='flex flex-col'> 
               <CardTitle>{title}</CardTitle>
