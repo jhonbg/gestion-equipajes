@@ -11,7 +11,7 @@ import Footer from "@/components/organism/Footer/index";
 import { usePrice } from "@/components/atoms/PriceContext";
 
 
-function Equipajes() {
+function EquipajesConfirmado() {
     const { totalPrice } = usePrice();
 
     const formatPrice = (price: number) => {
@@ -61,4 +61,4 @@ function Equipajes() {
     );
 }
 
-export default Equipajes;
+export default EquipajesConfirmado;
