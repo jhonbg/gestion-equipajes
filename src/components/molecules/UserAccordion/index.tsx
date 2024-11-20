@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useCallback} from 'react'
 import {
     Card,
     CardDescription,
@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import axios from 'axios';
 import { usePrice } from '@/components/atoms/PriceContext';
+import { StaticImageData } from 'next/image';
 import Image from "next/image";
 import UserIcon from "../../../../public/reservas-icons/image 14.svg"
 import Bolso from "../../../../public/reservas-icons/bolso.png"
@@ -28,12 +29,12 @@ interface Luggage {
 }
 
 const Index: React.FC<Props> = ({id}) => {
-  const [uniqueIcons, setUniqueIcons] = useState<any[]>([]);
-  const {totalPrice, setTotalPrice} = usePrice();
+  const [uniqueIcons, setUniqueIcons] = useState<StaticImageData[]>([]);
+  const { totalPrice, setTotalPrice } = usePrice();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const luggageRendering = (equipaje: string) => {
+  const luggageRendering = useCallback((equipaje: string) => {
     switch (equipaje) {
       case "Bolso de mano":
       case "Mochila":
@@ -59,49 +60,56 @@ const Index: React.FC<Props> = ({id}) => {
       default:
         return { icon: null, price: 0 };
     }
+  }, []);
+
+  useEffect(() => {
+    const fetchBookingData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/bookings/${id}`
+        );
+        const luggageList: Luggage[] = response.data.luggageList;
+
+        let total = 0;
+        const icons = new Set<StaticImageData>();
+
+        luggageList.forEach((item) => {
+          const { icon, price } = luggageRendering(item.type_luggage);
+          if (icon) {
+            icons.add(icon);
+          }
+          total += item.quantity * price;
+        });
+
+        setUniqueIcons(Array.from(icons));
+        setTotalPrice(total);
+        setLoading(false);
+      } catch (err) {
+        setError('Error al cargar los datos');
+        setLoading(false);
+      }
+    };
+
+    fetchBookingData();
+  }, [id, luggageRendering, setTotalPrice]);
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
-    useEffect(() => {
-        const fetchBookingData = async () => {
-          try {
-            const response = await axios.get(
-              `http://localhost:8080/api/bookings/${id}`
-            );
-            const luggageList: Luggage[] = response.data.luggageList;
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
-            let total = 0;
-            const icons = new Set();
-
-            luggageList.forEach((item) => {
-              const {icon, price} = luggageRendering(item.type_luggage);
-              if(icon){
-                icons.add(icon);
-              }
-              total = (item.quantity * price) + total;
-            });
-
-            setUniqueIcons(Array.from(icons));
-            setTotalPrice(total);
-            setLoading(false);
-          } catch(err) {
-            setError('Error al cargar los datos');
-            setLoading(false);
-            console.log(loading,error);
-          }
-        };
-    
-        fetchBookingData();
-      }, [id, setTotalPrice]);
-
-    const formatPrice = (price: number) => {
-        return price.toLocaleString("es-CO", {
-          style: "currency",
-          currency: "COP",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-      };
-
+  if (error) {
+    return <div>{error}</div>;
+  }
+  
   return (
     <Card className="w-full border-none shadow-none m-0">
             <CardHeader className="flex flex-row justify-between items-center">
