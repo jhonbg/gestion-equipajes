@@ -87,6 +87,7 @@ const Index: React.FC<Props> = ({id}) => {
       } catch (err) {
         setError('Error al cargar los datos');
         setLoading(false);
+        console.log(loading,error)
       }
     };
 

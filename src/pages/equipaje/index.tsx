@@ -74,7 +74,7 @@ function Equipajes() {
             specialLuggage3,
             specialLuggage4,
         } = form.getValues();
-
+    
         const calculatedTotal =
             (cabinLuggage2 ? 53900 : 0) +
             storeLuggage1 * 49900 +
@@ -83,10 +83,10 @@ function Equipajes() {
             specialLuggage2 * 49900 +
             specialLuggage3 * 49900 +
             specialLuggage4 * 49900;
-
+    
         const formattedPrice = numeral(calculatedTotal).format("0`000,0.00");
         return formattedPrice;
-    }, [form.getValues()]);
+    }, [form]);
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         console.log(data);
