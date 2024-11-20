@@ -21,15 +21,12 @@ interface Props {
 }
 
 const Index: React.FC<Props> = ({equipaje, numeros}) => {
-  const [page, setPage] = useState("");
   const [icon, setIcon] = useState<StaticImageData | null>(null);
   const [title, setTitle] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState<number | null>(null);
-  const [cantidad, setCantidad] = useState<number>(0);
 
   const luggageRendering = useCallback(() => {
-    setPage(equipaje);
     switch (equipaje) {
       case "Bolso de mano":
       case "Mochila":
@@ -112,30 +109,31 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
   };
 
   useEffect(() => {
-    setCantidad(numeros);
     luggageRendering();
-  }, [numeros, luggageRendering]);
+  }, [equipaje]);
 
   return (
-    <Card className='border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none'>
-        <span className='text-lg font-semibold'>{numeros}</span>
-        <div className='flex items-center justify-center flex-1'>
-          {icon && (
-            <Image
+    <Card className="border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none">
+      <span className="text-lg font-semibold">{numeros}</span>
+      <div className="flex items-center justify-center flex-1">
+        {icon && (
+          <Image
             src={icon}
             alt="usuario"
             width={44}
             height={44}
-          ></Image>
-          )}
-          <div className='flex flex-col'> 
-              <CardTitle>{title}</CardTitle>
-              <CardDescription>{descripcion}</CardDescription>
-          </div>
+          />
+        )}
+        <div className="flex flex-col">
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{descripcion}</CardDescription>
         </div>
-        <span className='font-semibold'>{precio !== null ? formatPrice(precio): ""}</span>
+      </div>
+      <span className="font-semibold">
+        {precio !== null ? formatPrice(precio) : ""}
+      </span>
     </Card>
-  )
-}
+  );
+};
 
 export default Index;
