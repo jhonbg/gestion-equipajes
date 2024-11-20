@@ -8,7 +8,7 @@ import React from "react";
 import Image from "next/image";
 import MusicIcon from "../../../../public/reservas-icons/musica.png";
 
-function Index() {
+function index() {
     return (
         <Card className="w-full border-none shadow-none m-0">
             <CardHeader className="flex flex-row justify-between">
@@ -33,4 +33,4 @@ function Index() {
     );
 }
 
-export default Index;
+export default index;

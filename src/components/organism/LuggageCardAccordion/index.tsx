@@ -6,7 +6,7 @@ interface Props{
     children: React.ReactNode;
 }
 
-function Index({children}: Props) {
+function index({children}: Props) {
   return (
     <Accordion type="single" collapsible>
                                         <AccordionItem
@@ -24,4 +24,4 @@ function Index({children}: Props) {
   )
 }
 
-export default Index
+export default index

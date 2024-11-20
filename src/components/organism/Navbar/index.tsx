@@ -2,7 +2,7 @@ import Image from "next/image";
 import Buttom from '@/components/atoms/Buttom'
 import {Icon} from '@iconify/react'
 
-const Index = () => {
+const index = () => {
     return (
       <nav className='w-full flex flex-row bg-[#0C7ABE] justify-between items-center h-20 px-6'>
         <div>
@@ -21,4 +21,4 @@ const Index = () => {
     );
   };
 
-export default Index;
+export default index;

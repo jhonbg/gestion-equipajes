@@ -3,7 +3,7 @@ import UserAccordion from '@/components/molecules/UserAccordion'
 import AccordionContentCard from '@/components/organism/AccordionContentCard'
 import React, { useState } from 'react'
 
-function Index() {
+function index() {
   const [id, setId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -46,4 +46,4 @@ function Index() {
   )
 }
 
-export default Index
+export default index

@@ -22,7 +22,7 @@ interface Props {
     onChange: (value: number) => void;
 }
 
-function Index({
+function index({
     title,
     description,
     price,
@@ -103,4 +103,4 @@ function Index({
     );
 }
 
-export default Index;
+export default index;

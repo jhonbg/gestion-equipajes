@@ -7,7 +7,7 @@ interface Props {
 
 }
 
-function Index({ active, title }: Props) {
+function index({ active, title }: Props) {
 
     
     return (
@@ -21,4 +21,4 @@ function Index({ active, title }: Props) {
     );
 }
 
-export default Index;
+export default index;

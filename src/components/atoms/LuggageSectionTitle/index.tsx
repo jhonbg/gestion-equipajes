@@ -7,7 +7,7 @@ interface Props{
     text2: string;
 }
 
-function Index({text1, text2}: Props) {
+function index({text1, text2}: Props) {
     return (
         <Card>
             <CardHeader className="bg-[#F1F5F9] py-1 px-4 rounded-lg ">
@@ -22,4 +22,4 @@ function Index({text1, text2}: Props) {
     );
 }
 
-export default Index;
+export default index;

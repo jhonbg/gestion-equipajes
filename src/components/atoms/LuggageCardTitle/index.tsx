@@ -6,7 +6,7 @@ interface Props {
     title: string;
 }
 
-function Index({ imageSrc, title }: Props) {
+function index({ imageSrc, title }: Props) {
     return (
         <div className="flex gap-2">
             <Image
@@ -20,4 +20,4 @@ function Index({ imageSrc, title }: Props) {
     );
 }
 
-export default Index;
+export default index;

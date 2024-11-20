@@ -3,7 +3,7 @@ import React from 'react'
 interface Props{
     children: React.ReactNode;
 }
-function Index({children}: Props) {
+function index({children}: Props) {
   return (
     <div className="grid grid-cols-2 gap-3">
         {children}
@@ -11,4 +11,4 @@ function Index({children}: Props) {
   )
 }
 
-export default Index
+export default index

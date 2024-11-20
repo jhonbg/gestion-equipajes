@@ -147,4 +147,4 @@ const index: React.FC<Props> = ({equipaje, numeros}) => {
   )
 }
 
-export default index
+export default index;

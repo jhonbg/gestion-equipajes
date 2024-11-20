@@ -8,7 +8,7 @@ import LuggagePassengerInfo from "@/components/atoms/LuggagePassengerInfo";
 interface Props {
     passengers: number;
 }
-function Index({passengers}: Props) {
+function index({passengers}: Props) {
     return (
         <CardHeader>
             <CardTitle className="flex justify-between text-xl font-semibold">
@@ -22,4 +22,4 @@ function Index({passengers}: Props) {
     );
 }
 
-export default Index;
+export default index;

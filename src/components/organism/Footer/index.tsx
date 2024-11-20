@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Index = () => {
+const index = () => {
     return(
         <footer className='w-full flex flex-col items-center h-20 border-2 bg-white text-center justify-center'>
             <div className='text-[#1A4F6E] font-bold'>
@@ -13,4 +13,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default index;
