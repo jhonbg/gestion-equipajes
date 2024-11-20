@@ -26,13 +26,14 @@ import LigthsIcon from "../../../public/reservas-icons/luces.png";
 import Navbar from "@/components/organism/Navbar/index";
 import Footer from "@/components/organism/Footer/index";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import axios from "axios";
 import numeral from "numeral";
 
+// Esquema de validación con zod
 const FormSchema = z.object({
     cabinLuggage1: z.boolean(),
     cabinLuggage2: z.boolean(),
@@ -44,11 +45,14 @@ const FormSchema = z.object({
     specialLuggage4: z.number(),
 });
 
+// Tipo inferido de zod
+type FormData = z.infer<typeof FormSchema>;
+
 function Equipajes() {
     const [passengers, setPassengers] = useState(0);
     const [totalPrice, setTotalPrice] = useState("0.00");
 
-    const form = useForm({
+    const form = useForm<FormData>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             cabinLuggage1: true,
@@ -84,9 +88,9 @@ function Equipajes() {
 
         const formattedPrice = numeral(calculatedTotal).format("0`000,0.00");
         return formattedPrice;
-    }, [form.getValues()]);
+    }, [form.getValues]); // Dependencias del cálculo
 
-    function onSubmit(data: any) {
+    const onSubmit: SubmitHandler<FormData> = (data) => {
         console.log(data);
         toast({
             title: "You submitted the following values:",
@@ -98,14 +102,13 @@ function Equipajes() {
                 </pre>
             ),
         });
-    }
+    };
 
     const getReservationData = async () => {
         try {
             const response = await axios.get(
                 "http://localhost:3000/reservation"
             );
-
             setPassengers(response.data.passengers.length);
         } catch (error) {
             console.error(error);
@@ -118,9 +121,8 @@ function Equipajes() {
 
     useEffect(() => {
         const newTotal = calculateTotalPrice();
-
         setTotalPrice(newTotal);
-    }, [form.getValues(), calculateTotalPrice]);
+    }, [calculateTotalPrice]); // Dependencia optimizada
 
     return (
         <>
@@ -143,10 +145,6 @@ function Equipajes() {
                                                 title="Ida"
                                                 active={true}
                                             />
-                                            {/* <LuggageTravelInfo
-                                                title="Vuelta"
-                                                active={false}
-                                            /> */}
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="py-5">
@@ -154,7 +152,6 @@ function Equipajes() {
                                             text1="Selecciona qué"
                                             text2="llevarás en cabina"
                                         />
-
                                         <LuggageSectionLayout>
                                             <FormField
                                                 control={form.control}
@@ -165,35 +162,24 @@ function Equipajes() {
                                                             title="1 Bolso o mochila pequeña"
                                                             description="Bajo el asiento delantero"
                                                             radioLabel="Bolsa o mochila pequeña incluida"
-                                                            onChange={
-                                                                field.onChange
-                                                            }
-                                                            checked={
-                                                                field.value
-                                                            }
+                                                            onChange={field.onChange}
+                                                            checked={field.value}
                                                         />
                                                     </FormItem>
                                                 )}
                                             />
-
                                             <FormField
                                                 control={form.control}
                                                 name="cabinLuggage2"
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <LuggageCardRadioButton
-                                                            title="1 Bolso o mochila
-                                                        pequeña"
+                                                            title="1 Bolso o mochila pequeña"
                                                             description="+ 1 equipaje de mano"
-                                                            radioLabel="Ambos por COP 
-                                                            "
+                                                            radioLabel="Ambos por COP"
                                                             price={53900}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
-                                                            checked={
-                                                                field.value
-                                                            }
+                                                            onChange={field.onChange}
+                                                            checked={field.value}
                                                         />
                                                     </FormItem>
                                                 )}
@@ -216,14 +202,11 @@ function Equipajes() {
                                                             price={49900}
                                                             icon={MaletaIcon}
                                                             maxAmount={3}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
+                                                            onChange={field.onChange}
                                                         />
                                                     </FormItem>
                                                 )}
                                             />
-
                                             <FormField
                                                 control={form.control}
                                                 name="storeLuggage2"
@@ -235,9 +218,7 @@ function Equipajes() {
                                                             price={49900}
                                                             icon={MaletaIcon}
                                                             maxAmount={3}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
+                                                            onChange={field.onChange}
                                                         />
                                                     </FormItem>
                                                 )}
@@ -254,60 +235,7 @@ function Equipajes() {
                                                             title="Instrumento musical 15kg"
                                                             price={49900}
                                                             icon={GuitarIcon}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
-                                                        />
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            <FormField
-                                                control={form.control}
-                                                name="specialLuggage2"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <LuggageCardAdd
-                                                            title="Equipo deportivo 15kg"
-                                                            price={49900}
-                                                            icon={SportIcon}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
-                                                        />
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            <FormField
-                                                control={form.control}
-                                                name="specialLuggage3"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <LuggageCardAdd
-                                                            title="Equipos adiovisuales 15kg"
-                                                            price={49900}
-                                                            icon={LigthsIcon}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
-                                                        />
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            <FormField
-                                                control={form.control}
-                                                name="specialLuggage4"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <LuggageCardAdd
-                                                            title="Guacal con mascota 15kg"
-                                                            price={49900}
-                                                            icon={MascotIcon}
-                                                            onChange={
-                                                                field.onChange
-                                                            }
+                                                            onChange={field.onChange}
                                                         />
                                                     </FormItem>
                                                 )}
@@ -324,23 +252,13 @@ function Equipajes() {
                                     </CardFooter>
                                 </Card>
                             </CardContent>
-                            <CardFooter className="flex justify-center">
-                                {passengers > 1 ? (
-                                    <Button
-                                        type="submit"
-                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                    >
-                                        Agregar y Continuar
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        type="submit"
-                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                    >
-                                        Enviar
-                                    </Button>
-                                )}
-                            </CardFooter>
+                            <Button
+                                className="w-full mt-6"
+                                type="submit"
+                                disabled={false}
+                            >
+                                Continuar
+                            </Button>
                         </Card>
                     </form>
                 </Form>
@@ -351,3 +269,4 @@ function Equipajes() {
 }
 
 export default Equipajes;
+
