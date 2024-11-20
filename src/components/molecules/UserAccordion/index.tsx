@@ -27,7 +27,7 @@ interface Luggage {
   quantity: number;
 }
 
-const index: React.FC<Props> = ({id}) => {
+const Index: React.FC<Props> = ({id}) => {
   const [uniqueIcons, setUniqueIcons] = useState<any[]>([]);
   const {totalPrice, setTotalPrice} = usePrice();
   const [loading, setLoading] = useState<boolean>(true);
@@ -135,4 +135,4 @@ const index: React.FC<Props> = ({id}) => {
   )
 }
 
-export default index
+export default Index

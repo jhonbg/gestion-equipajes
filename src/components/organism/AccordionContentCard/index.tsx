@@ -26,7 +26,7 @@ interface Props{
   id: number;
 }
 
-const index: React.FC<Props> = ({id}) =>{
+const Index: React.FC<Props> = ({id}) =>{
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,4 +68,4 @@ const index: React.FC<Props> = ({id}) =>{
   )
 }
 
-export default index
+export default Index

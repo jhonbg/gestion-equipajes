@@ -19,7 +19,7 @@ interface Props {
   numeros: number;
 }
 
-const index: React.FC<Props> = ({equipaje, numeros}) => {
+const Index: React.FC<Props> = ({equipaje, numeros}) => {
   const [page, setPage] = useState("");
   const [icon, setIcon] = useState<any>(null);
   const [title, setTitle] = useState("");
@@ -147,4 +147,4 @@ const index: React.FC<Props> = ({equipaje, numeros}) => {
   )
 }
 
-export default index;
+export default Index;
