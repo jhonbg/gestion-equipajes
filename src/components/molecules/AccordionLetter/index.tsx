@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
     Card,
     CardDescription,
@@ -28,15 +28,10 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
   const [precio, setPrecio] = useState<number | null>(null);
   const [cantidad, setCantidad] = useState<number>(0);
 
-  const luggageRendering = () => {
-    setPage(equipaje)
-    switch (equipaje){
+  const luggageRendering = useCallback(() => {
+    setPage(equipaje);
+    switch (equipaje) {
       case "Bolso de mano":
-        setIcon(Bolso);
-        setTitle("Bolso o mochila pequeña");
-        setDescripcion("Bajo el asiento delantero");
-        setPrecio(0);
-        break;
       case "Mochila":
         setIcon(Bolso);
         setTitle("Bolso o mochila pequeña");
@@ -74,14 +69,9 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
         setPrecio(49900);
         break;
       case "Equipaje deportivo":
-        setIcon(SportIcon);
-        setTitle("Equipaje deportivo");
-        setDescripcion("15kg");
-        setPrecio(49900);
-        break;
       case "Maleta deportiva":
         setIcon(SportIcon);
-        setTitle("Maleta deportiva");
+        setTitle("Equipaje deportivo");
         setDescripcion("15kg");
         setPrecio(49900);
         break;
@@ -99,18 +89,18 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
         break;
       case "Equipos adiovisuales":
         setIcon(Audiovisuales);
-        setTitle("Equipos adiovisuales");
+        setTitle("Equipos audiovisuales");
         setDescripcion("15kg");
         setPrecio(49900);
         break;
       case "Equipaje frágil":
         setIcon(Fragil);
         setTitle("Equipaje frágil");
-        setDescripcion("cuidado");
+        setDescripcion("Cuidado");
         setPrecio(49900);
         break;
     }
-  }
+  }, [equipaje]);
 
   const formatPrice = (price: number) => {
     return price.toLocaleString("es-CO", {
@@ -124,8 +114,7 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
   useEffect(() => {
     setCantidad(numeros);
     luggageRendering();
-    console.log(cantidad, page);
-  }, [[equipaje, numeros,cantidad,luggageRendering]])
+  }, [numeros, luggageRendering]);
 
   return (
     <Card className='border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none'>
