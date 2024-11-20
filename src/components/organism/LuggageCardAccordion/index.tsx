@@ -17,8 +17,7 @@ function Index({children}: Props) {
                                                 <LuggageAccordionTrigger />
                                             </AccordionTrigger>
                                             <AccordionContent className="grid grid-cols-2 grid-rows-2 gap-2 pl-3 pr-3">
-                                                {children}
-                                                
+                                                {children} 
                                             </AccordionContent>
                                         </AccordionItem>
                                     </Accordion>
