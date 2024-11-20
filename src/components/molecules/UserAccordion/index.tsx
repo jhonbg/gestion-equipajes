@@ -93,23 +93,15 @@ const Index: React.FC<Props> = ({id}) => {
     fetchBookingData();
   }, [id, luggageRendering, setTotalPrice]);
 
-  const formatPrice = (price: number) => {
-    return price.toLocaleString("es-CO", {
-      style: "currency",
-      currency: "COP",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-  };
+    const formatPrice = (price: number) => {
+        return price.toLocaleString("es-CO", {
+          style: "currency",
+          currency: "COP",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      };
 
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-  
   return (
     <Card className="w-full border-none shadow-none m-0">
             <CardHeader className="flex flex-row justify-between items-center">
