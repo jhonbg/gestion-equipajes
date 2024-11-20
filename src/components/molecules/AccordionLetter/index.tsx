@@ -125,7 +125,7 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
     setCantidad(numeros);
     luggageRendering();
     console.log(cantidad, page);
-  }, [[equipaje, numeros]])
+  }, [[equipaje, numeros,cantidad,luggageRendering]])
 
   return (
     <Card className='border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none'>
