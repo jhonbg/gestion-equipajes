@@ -110,7 +110,7 @@ const Index: React.FC<Props> = ({equipaje, numeros}) => {
 
   useEffect(() => {
     luggageRendering();
-  }, [equipaje]);
+  }, [luggageRendering]);
 
   return (
     <Card className="border-none flex flex-row items-center mt-9 ml-14 mr-10 shadow-none">
