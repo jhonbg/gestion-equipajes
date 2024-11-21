@@ -29,7 +29,7 @@ import Footer from "@/components/organism/Footer/index";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import axios from "axios";
 import numeral from "numeral";
@@ -45,9 +45,22 @@ const FormSchema = z.object({
     specialLuggage4: z.number(),
 });
 
-function Equipajes() {
-    const [passengers, setPassengers] = useState(0);
+interface LuggageData {
+    dimentions: string;
+    luggage_location: string;
+    quantity: number;
+    type_luggage: string;
+    weight: number;
+    booking_id?: any;
+    id_politic?: number;
+}
+
+function AgregarEquipaje() {
+    const [passengers, setPassengers] = useState(1);
+    const [bookingId, setBookingId] = useState(45236);
     const [totalPrice, setTotalPrice] = useState("0.00");
+    const [loading, setLoading] = useState(false);
+    const { toast } = useToast();
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
@@ -83,22 +96,99 @@ function Equipajes() {
             specialLuggage3 * 49900 +
             specialLuggage4 * 49900;
 
-        const formattedPrice = numeral(calculatedTotal).format("0`000,0.00");
+        const formattedPrice = numeral(calculatedTotal).format("0`000.0,00");
         return formattedPrice;
     }, [form.getValues()]);
 
-    function onSubmit(data: any) {
-        console.log(data);
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        });
+    async function sendLuggageRequest(luggageData: LuggageData) {
+        return await axios.post(
+            "http://localhost:8080/api/Luggage/agregar",
+            luggageData
+        );
+    }
+
+    async function onSubmit(data: any) {
+        setLoading(true);
+        try {
+            const luggageRequests: LuggageData[] = [
+                data.cabinLuggage1 && {
+                    dimentions: "45x35x20",
+                    luggage_location: "cabina",
+                    quantity: 1,
+                    type_luggage: "bolso",
+                    weight: 5.0,
+                },
+                data.cabinLuggage2 && {
+                    dimentions: "45x35x20",
+                    luggage_location: "cabina",
+                    quantity: 1,
+                    type_luggage: "bolso",
+                    weight: 10.0,
+                },
+                data.storeLuggage1 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.storeLuggage1,
+                    type_luggage: "maleta",
+                    weight: 15.0,
+                },
+                data.storeLuggage2 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.storeLuggage2,
+                    type_luggage: "maleta",
+                    weight: 23.0,
+                },
+                data.specialLuggage1 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.specialLuggage1,
+                    type_luggage: "instrumento",
+                    weight: 15.0,
+                },
+                data.specialLuggage2 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.specialLuggage2,
+                    type_luggage: "equipo deportivo",
+                    weight: 15.0,
+                },
+                data.specialLuggage3 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.specialLuggage3,
+                    type_luggage: "audiovisual",
+                    weight: 15.0,
+                },
+                data.specialLuggage4 > 0 && {
+                    dimentions: "158",
+                    luggage_location: "bodega",
+                    quantity: data.specialLuggage4,
+                    type_luggage: "mascota",
+                    weight: 15.0,
+                },
+            ].filter(Boolean) as LuggageData[];
+
+            for (const requestData of luggageRequests) {
+                requestData.booking_id = bookingId;
+                requestData.id_politic = 1;
+                await sendLuggageRequest(requestData);
+                toast({
+                    title: "El equipaje fue almacenado con éxito",
+                });
+            }
+        } catch (error) {
+            if (error.response) {
+                toast({ title: "Hubo un error, vuelva a intentarlo" });
+
+                console.error(
+                    "Error en la respuesta del servidor:",
+                    error.response.data
+                );
+            }
+        } finally {
+            setLoading(false);
+        }
     }
 
     const getReservationData = async () => {
@@ -106,6 +196,8 @@ function Equipajes() {
             const response = await axios.get(
                 "http://localhost:3000/reservation"
             );
+
+            setBookingId(response.data.id);
 
             setPassengers(response.data.passengers.length);
         } catch (error) {
@@ -326,21 +418,12 @@ function Equipajes() {
                                 </Card>
                             </CardContent>
                             <CardFooter className="flex justify-center">
-                                {passengers > 1 ? (
-                                    <Button
-                                        type="submit"
-                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                    >
-                                        Agregar y Continuar
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        type="submit"
-                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                    >
-                                        Enviar
-                                    </Button>
-                                )}
+                                <Button
+                                    type="submit"
+                                    className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
+                                >
+                                    Enviar
+                                </Button>
                             </CardFooter>
                         </Card>
                     </form>
@@ -351,4 +434,4 @@ function Equipajes() {
     );
 }
 
-export default Equipajes;
+export default AgregarEquipaje;

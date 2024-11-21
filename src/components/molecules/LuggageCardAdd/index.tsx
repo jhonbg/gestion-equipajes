@@ -51,7 +51,7 @@ function Index({
         }
     };
 
-    const formattedPrice = numeral(price).format('0`000,0.00');
+    const formattedPrice = numeral(price).format('0`000.0,00');
 
 
     return (
