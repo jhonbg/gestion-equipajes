@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -26,7 +27,7 @@ import LigthsIcon from "../../../public/reservas-icons/luces.png";
 import Navbar from "@/components/organism/Navbar/index";
 import Footer from "@/components/organism/Footer/index";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -44,13 +45,11 @@ const FormSchema = z.object({
     specialLuggage4: z.number(),
 });
 
-type FormData = z.infer<typeof FormSchema>;
-
 function Equipajes() {
     const [passengers, setPassengers] = useState(0);
     const [totalPrice, setTotalPrice] = useState("0.00");
 
-    const form = useForm<FormData>({
+    const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             cabinLuggage1: true,
@@ -88,7 +87,7 @@ function Equipajes() {
         return formattedPrice;
     }, [form.getValues()]);
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    function onSubmit(data: any) {
         console.log(data);
         toast({
             title: "You submitted the following values:",
@@ -100,13 +99,14 @@ function Equipajes() {
                 </pre>
             ),
         });
-    };
+    }
 
     const getReservationData = async () => {
         try {
             const response = await axios.get(
                 "http://localhost:3000/reservation"
             );
+
             setPassengers(response.data.passengers.length);
         } catch (error) {
             console.error(error);
@@ -119,8 +119,9 @@ function Equipajes() {
 
     useEffect(() => {
         const newTotal = calculateTotalPrice();
+
         setTotalPrice(newTotal);
-    }, [calculateTotalPrice]);
+    }, [form.getValues(), calculateTotalPrice]);
 
     return (
         <>
