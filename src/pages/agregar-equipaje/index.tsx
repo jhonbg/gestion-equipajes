@@ -418,12 +418,16 @@ function AgregarEquipaje() {
                                 </Card>
                             </CardContent>
                             <CardFooter className="flex justify-center">
-                                <Button
-                                    type="submit"
-                                    className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
-                                >
-                                    Enviar
-                                </Button>
+                                {loading ? (
+                                    <div className="loader"></div>
+                                ) : (
+                                    <Button
+                                        type="submit"
+                                        className="bg-[#1A4F6E] text-white hover:bg-[#133d56]"
+                                    >
+                                        Enviar
+                                    </Button>
+                                )}
                             </CardFooter>
                         </Card>
                     </form>
